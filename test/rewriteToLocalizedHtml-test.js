@@ -50,6 +50,7 @@ vows.describe('rewriteToLocalizedHtml').addBatch({
     '/subdir/other with cookie': createVow({url: '/subdir/other', cookies: {locale: 'da'}}, '/subdir/other.da.html'),
     '/subdir/other with simple Accept-Language': createVow({url: '/subdir/other', headers: {'accept-language': 'da'}}, '/subdir/other.da.html'),
     '/subdirwithnonlocalized/': createVow({url: '/subdirwithnonlocalized/'}, '/subdirwithnonlocalized/index.html'),
+    '/subdirwithnonlocalized/other': createVow({url: '/subdirwithnonlocalized/other'}, '/subdirwithnonlocalized/other.html'),
     '/nonexistentdir/': createVow({url: '/nonexistentdir/'}, '/nonexistentdir/'),
     '/$': createVow({url: '/$'}, '/$')
 })['export'](module);
