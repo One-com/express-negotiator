@@ -4,7 +4,10 @@ var path = require('path'),
     http = require('http'),
     express = require('express'), // So that http.IncomingMessage.prototype gets patched
     _ = require('underscore'),
-    rewriteToLocalizedHtml = require('../lib/middleware/rewriteToLocalizedHtml');
+    rewriteToLocalizedHtml = require('../lib/middleware/rewriteToLocalizedHtml')({
+        root: path.resolve(__dirname, 'rewriteToLocalizedHtml'),
+        cookieName: 'locale'
+    });
 
 function createVow(req, expectedRewrittenUrl) {
     req.headers = req.headers || {};
@@ -14,10 +17,7 @@ function createVow(req, expectedRewrittenUrl) {
     var context = {
         topic: function () {
             var callback = this.callback;
-            rewriteToLocalizedHtml({
-                root: path.resolve(__dirname, 'rewriteToLocalizedHtml'),
-                cookieName: 'locale'
-            })(req, null, function (err) {
+            rewriteToLocalizedHtml(req, null, function (err) {
                 callback(err, req);
             });
         }
@@ -50,5 +50,6 @@ vows.describe('rewriteToLocalizedHtml').addBatch({
     '/subdir/other with cookie': createVow({url: '/subdir/other', cookies: {locale: 'da'}}, '/subdir/other.da.html'),
     '/subdir/other with simple Accept-Language': createVow({url: '/subdir/other', headers: {'accept-language': 'da'}}, '/subdir/other.da.html'),
     '/subdirwithnonlocalized/': createVow({url: '/subdirwithnonlocalized/'}, '/subdirwithnonlocalized/index.html'),
-    '/nonexistentdir/': createVow({url: '/nonexistentdir/'}, '/nonexistentdir/')
+    '/nonexistentdir/': createVow({url: '/nonexistentdir/'}, '/nonexistentdir/'),
+    '/$': createVow({url: '/$'}, '/$')
 })['export'](module);
