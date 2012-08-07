@@ -10,6 +10,7 @@ var path = require('path'),
     });
 
 function createVow(req, expectedRewrittenUrl) {
+    var res = {__proto__: http.OutgoingMessage.prototype};
     req.headers = req.headers || {};
     req.headers.accept = req.headers.accept || 'text/html';
     req.cookies = req.cookies || {};
@@ -17,7 +18,7 @@ function createVow(req, expectedRewrittenUrl) {
     var context = {
         topic: function () {
             var callback = this.callback;
-            rewriteToLocalizedHtml(req, null, function (err) {
+            rewriteToLocalizedHtml(req, res, function (err) {
                 callback(err, req);
             });
         }
