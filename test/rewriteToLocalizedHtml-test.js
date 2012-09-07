@@ -9,16 +9,16 @@ var path = require('path'),
         cookieName: 'locale'
     });
 
-function createVow(req, expectedRewrittenUrl) {
-    var res = {__proto__: http.OutgoingMessage.prototype};
+function createVow(requestProperties, expectedRewrittenUrl) {
+    var req = new http.IncomingMessage();
+    _.extend(req, requestProperties);
     req.headers = req.headers || {};
     req.headers.accept = req.headers.accept || 'text/html';
     req.cookies = req.cookies || {};
-    req.__proto__ = http.IncomingMessage.prototype;
     var context = {
         topic: function () {
             var callback = this.callback;
-            rewriteToLocalizedHtml(req, res, function (err) {
+            rewriteToLocalizedHtml(req, new http.OutgoingMessage(), function (err) {
                 callback(err, req);
             });
         }
