@@ -37,6 +37,7 @@ vows.describe('rewriteToLocalizedHtml').addBatch({
     '/ with cookie and conflicting Accept-Language': createVow({url: '/', cookies: {locale: 'da'}, headers: {'accept-language': 'da-DK'}}, '/index.da.html'),
     '/ with simple Accept-Language': createVow({url: '/', headers: {'accept-language': 'da'}}, '/index.da.html'),
     '/ with complex Accept-Language': createVow({url: '/', headers: {'accept-language': 'en-GB;q=1,da-DK;q=0.8,da'}}, '/index.da_DK.html'),
+    '/ot%68er': createVow({url: '/ot%68er'}, '/other.en_US.html'),
     '/other': createVow({url: '/other'}, '/other.en_US.html'),
     '/other?foo=bar': createVow({url: '/other?foo=bar'}, '/other.en_US.html?foo=bar'),
     '/other with cookie': createVow({url: '/other', cookies: {locale: 'da'}}, '/other.da.html'),
