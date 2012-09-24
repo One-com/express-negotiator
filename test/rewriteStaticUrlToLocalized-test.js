@@ -71,5 +71,9 @@ vows.describe('rewriteStaticUrlToLocalized').addBatch({
     '/ with Accept: text/cache-manifest and Accept-Language: da': createVow({url: '/', headers: {accept: 'text/cache-manifest', 'accept-language': 'da'}}, '/index.da.appcache'),
     '/index with Accept that prefers text/cache-manifest': createVow({url: '/index', headers: {accept: 'text/cache-manifest;q=1,text/html;q=0.8'}}, '/index.en_US.appcache'),
     '/index with Accept that prefers text/html': createVow({url: '/index', headers: {accept: 'text/html;q=1,text/cache-manifest;q=0.8'}}, '/index.en_US.html'),
-    '/onlyIndexHtml/ with Accept: */*': createVow({url: '/onlyIndexHtml/', headers: {accept: '*/*'}}, '/onlyIndexHtml/index.html')
+    '/onlyIndexHtml/ with Accept: */*': createVow({url: '/onlyIndexHtml/', headers: {accept: '*/*'}}, '/onlyIndexHtml/index.html'),
+    '/thething with Accept: text/html': createVow({url: '/thething', headers: {accept: 'text/html'}}, '/thething.html'),
+    '/thething with Accept: */*': createVow({url: '/thething', headers: {accept: '*/*'}}, '/thething.html'),
+    '/thething with Accept: text/*': createVow({url: '/thething', headers: {accept: 'text/*'}}, '/thething.html'),
+    '/thething with Accept: */html': createVow({url: '/thething', headers: {accept: '*/html'}}, '/thething.html')
 })['export'](module);
