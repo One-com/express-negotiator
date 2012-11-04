@@ -4,8 +4,8 @@ var path = require('path'),
     http = require('http'),
     express = require('express'), // So that http.IncomingMessage.prototype gets patched
     _ = require('underscore'),
-    rewriteStaticUrlToLocalized = require('../lib/middleware/rewriteStaticUrlToLocalized')({
-        root: path.resolve(__dirname, 'rewriteStaticUrlToLocalized'),
+    negotiator = require('../lib/')({
+        root: path.resolve(__dirname, 'root'),
         cookieName: 'locale'
     });
 
@@ -18,7 +18,7 @@ function createVow(requestProperties, expectedRewrittenUrl) {
     var context = {
         topic: function () {
             var callback = this.callback;
-            rewriteStaticUrlToLocalized(req, new http.OutgoingMessage(), function (err) {
+            negotiator(req, new http.OutgoingMessage(), function (err) {
                 callback(err, req);
             });
         }
@@ -29,7 +29,7 @@ function createVow(requestProperties, expectedRewrittenUrl) {
     return context;
 }
 
-vows.describe('rewriteStaticUrlToLocalized').addBatch({
+vows.describe('negotiator').addBatch({
     '/': createVow({url: '/'}, '/index.en_US.html'),
     '/?foo=bar': createVow({url: '/?foo=bar'}, '/index.en_US.html?foo=bar'),
     '/ with cookie': createVow({url: '/', cookies: {locale: 'da'}}, '/index.da.html'),
