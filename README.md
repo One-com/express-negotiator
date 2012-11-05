@@ -78,10 +78,8 @@ GET / HTTP/1.1
 Accept: text/html
 Accept-Language: en
 
-=>
-
-GET /index.en.html
-ETag: "<size>-<modificationTime>-text/html-en"
+=> /index.en.html
+Response ETag: "<size>-<modificationTime>-text/html-en"
 ```
 
 ```
@@ -89,10 +87,8 @@ GET /?locale=da HTTP/1.1
 Accept: text/html
 Accept-Language: en
 
-=>
-
-GET /index.da.html
-ETag: "<size>-<modificationTime>-text/html-da"
+=> /index.da.html
+Response ETag: "<size>-<modificationTime>-text/html-da"
 ```
 
 ```
@@ -101,20 +97,16 @@ Cookie: mycookie=da
 Accept: text/html
 Accept-Language: en
 
-=>
-
-GET /index.da.html
-ETag: "<size>-<modificationTime>-text/html-da"
+=> /index.da.html
+Response ETag: "<size>-<modificationTime>-text/html-da"
 ```
 
 ```
 GET /foo HTTP/1.1
 Accept: image/*
 
-=>
-
-GET /foo.png
-ETag: "<size>-<modificationTime>-image/png"
+=> /foo.png
+Response ETag: "<size>-<modificationTime>-image/png"
 ```
 
 See the test suite for more examples.
