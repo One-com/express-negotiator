@@ -22,6 +22,7 @@
         "node": "*"
     },
     "dependencies": {
+        "memoizeasync": "=0.0.1",
         "memoizer": "=0.0.4",
         "mime": "=1.2.7",
         "passerror": "=0.0.1",
