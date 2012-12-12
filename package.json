@@ -38,5 +38,5 @@
         "express": "=2.5.11",
         "vows": "=0.6.1"
     },
-    "main": "lib/index.js"
+    "main": "lib/expressNegotiator.js"
 }

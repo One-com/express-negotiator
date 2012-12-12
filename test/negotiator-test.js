@@ -4,7 +4,7 @@ var path = require('path'),
     http = require('http'),
     express = require('express'), // So that http.IncomingMessage.prototype gets patched
     _ = require('underscore'),
-    negotiator = require('../lib/')({
+    expressNegotiator = require('../lib/expressNegotiator')({
         root: path.resolve(__dirname, 'root'),
         cookieName: 'locale'
     });
@@ -18,7 +18,7 @@ function createVow(requestProperties, expectedRewrittenUrl) {
     var context = {
         topic: function () {
             var callback = this.callback;
-            negotiator(req, new http.OutgoingMessage(), function (err) {
+            expressNegotiator(req, new http.OutgoingMessage(), function (err) {
                 callback(err, req);
             });
         }
@@ -29,7 +29,7 @@ function createVow(requestProperties, expectedRewrittenUrl) {
     return context;
 }
 
-vows.describe('negotiator').addBatch({
+vows.describe('express-negotiator').addBatch({
     '/': createVow({url: '/'}, '/index.en_US.html'),
     '/?foo=bar': createVow({url: '/?foo=bar'}, '/index.en_US.html?foo=bar'),
     '/ with cookie': createVow({url: '/', cookies: {locale: 'da'}}, '/index.da.html'),
