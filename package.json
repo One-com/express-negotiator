@@ -6,6 +6,9 @@
         "http",
         "content negotiation",
         "connect",
+        "accept",
+        "accept-language",
+        "cookie",
         "express",
         "localization",
         "l10n",
@@ -14,6 +17,8 @@
         "locale",
         "content-type",
         "content type",
+        "html",
+        "static",
         "extension",
         "mime"
     ],
