@@ -2,13 +2,10 @@ var path = require('path'),
     expect = require('expect.js'),
     http = require('http'),
     express = require('express'), // So that http.IncomingMessage.prototype gets patched
-    _ = require('underscore'),
-    expressNegotiator = require('../lib/expressNegotiator')({
-        root: path.resolve(__dirname, 'root'),
-        cookieName: 'locale'
-    });
+    expressNegotiator = require('../lib/expressNegotiator'),
+    _ = require('underscore');
 
-function createTest(description, requestProperties, expectedRewrittenUrl) {
+function createTest(description, requestProperties, expectedRewrittenUrl, expressNegotiatorOptions) {
     var req = new http.IncomingMessage();
     _.extend(req, requestProperties);
     req.headers = req.headers || {};
@@ -16,7 +13,10 @@ function createTest(description, requestProperties, expectedRewrittenUrl) {
     req.cookies = req.cookies || {};
     describe(description, function () {
         it('should be rewritten to ' + expectedRewrittenUrl, function (done) {
-            expressNegotiator(req, new http.OutgoingMessage(), function (err) {
+            expressNegotiator(_.extend({
+                root: path.resolve(__dirname, 'root'),
+                cookieName: 'locale'
+            }, expressNegotiatorOptions))(req, new http.OutgoingMessage(), function (err) {
                 expect(req.url).to.eql(expectedRewrittenUrl);
                 done();
             });
@@ -71,4 +71,6 @@ describe('express-negotiator', function () {
     createTest('/thething with Accept: */*', {url: '/thething', headers: {accept: '*/*'}}, '/thething.html');
     createTest('/thething with Accept: text/*', {url: '/thething', headers: {accept: 'text/*'}}, '/thething.html');
     createTest('/thething with Accept: */html', {url: '/thething', headers: {accept: '*/html'}}, '/thething.html');
+    createTest('/ Accept: */html, a mobile user agent and userAgent:true', {url: '/', headers: {accept: '*/html', 'user-agent': 'Mozilla/5.0 (iPad; U; CPU OS 4_3_2 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8H7 Safari/6533.18.5"'}}, '/index.mobile.en_US.html', {userAgent: true});
+    createTest('/ Accept: */html, a mobile user agent and userAgent:false', {url: '/', headers: {accept: '*/html', 'user-agent': 'Mozilla/5.0 (iPad; U; CPU OS 4_3_2 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8H7 Safari/6533.18.5"'}}, '/index.en_US.html', {userAgent: false});
 });
