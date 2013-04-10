@@ -27,7 +27,7 @@
         "node": "*"
     },
     "dependencies": {
-        "bowser-papandreou": "=0.2.0-patch3",
+        "bowser-papandreou": "=0.3.0",
         "memoizeasync": "=0.0.1",
         "memoizesync": "=0.0.1",
         "mime": "=1.2.7",
