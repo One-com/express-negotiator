@@ -28,7 +28,7 @@
     },
     "dependencies": {
         "async": "=0.2.8",
-        "mario": "=1.4.0",
+        "mario": "=1.4.1",
         "memoizeasync": "=0.0.1",
         "memoizesync": "=0.0.1",
         "mime": "=1.2.7",
