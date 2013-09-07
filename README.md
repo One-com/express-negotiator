@@ -34,7 +34,7 @@ Conditional requests
 When the url is rewritten, negotiator sets the ETag header to the same
 value as the `static` middleware would
 (`"<size>-<modificationTime>"`), but with the negotiated Content-Type
-and locale id bits prefixed. This prevents false positive 304
+and locale id bits suffixed. This prevents false positive 304
 responses with `If-None-Match` when the same client (or reverse proxy)
 requests the same url later with different headers (eg. after a locale
 cookie change). That would happen if the files happened to have the
