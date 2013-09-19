@@ -1,5 +1,5 @@
 var path = require('path'),
-    expect = require('expect.js'),
+    expect = require('unexpected'),
     http = require('http'),
     express = require('express'), // So that http.IncomingMessage.prototype gets patched
     expressNegotiator = require('../lib/expressNegotiator'),
@@ -17,7 +17,7 @@ function createTest(description, requestProperties, expectedRewrittenUrl, expres
                 root: path.resolve(__dirname, 'root'),
                 cookieName: 'locale'
             }, expressNegotiatorOptions))(req, new http.OutgoingMessage(), function (err) {
-                expect(req.url).to.eql(expectedRewrittenUrl);
+                expect(req.url, 'to equal', expectedRewrittenUrl);
                 done();
             });
         });
