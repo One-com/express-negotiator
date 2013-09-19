@@ -1,4 +1,4 @@
-var path = require('path'),
+var Path = require('path'),
     expect = require('unexpected'),
     http = require('http'),
     express = require('express'), // So that http.IncomingMessage.prototype gets patched
@@ -14,7 +14,7 @@ function createTest(description, requestProperties, expectedRewrittenUrl, expres
     describe(description, function () {
         it('should be rewritten to ' + expectedRewrittenUrl, function (done) {
             expressNegotiator(_.extend({
-                root: path.resolve(__dirname, 'root'),
+                root: Path.resolve(__dirname, 'root'),
                 cookieName: 'locale'
             }, expressNegotiatorOptions))(req, new http.OutgoingMessage(), function (err) {
                 expect(req.url, 'to equal', expectedRewrittenUrl);
@@ -79,4 +79,30 @@ describe('express-negotiator', function () {
     createTest('/bar Accept: */html, a touch user agent and userAgent:true', {url: '/bar', headers: {accept: '*/html', 'user-agent': 'Mozilla/5.0 (iPad; U; CPU OS 4_3_2 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8H7 Safari/6533.18.5"'}}, '/bar.touch.html', {userAgent: true});
     createTest('/baz Accept: */html, a non-touch user agent and userAgent:true', {url: '/baz', headers: {accept: '*/html', 'user-agent': 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C)'}}, '/baz.nontouch.html', {userAgent: true});
     createTest('/baz Accept: */html, a touch user agent and userAgent:true', {url: '/baz', headers: {accept: '*/html', 'user-agent': 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; ARM; Trident/6.0; Touch)'}}, '/baz.touch.html', {userAgent: true});
+
+    describe('with multiple roots', function () {
+        createTest(
+            '/ with simple Accept-Language matching a file in root1',
+            {url: '/', headers: {'accept-language': 'en_US'}},
+            '/index.en_US.html',
+            {
+                root: [
+                    Path.resolve(__dirname, 'multipleRoots', 'root1'),
+                    Path.resolve(__dirname, 'multipleRoots', 'root2')
+                ]
+            }
+        );
+
+        createTest(
+            '/ with simple Accept-Language matching a file in root2',
+            {url: '/', headers: {'accept-language': 'da'}},
+            '/index.da.html',
+            {
+                root: [
+                    Path.resolve(__dirname, 'multipleRoots', 'root1'),
+                    Path.resolve(__dirname, 'multipleRoots', 'root2')
+                ]
+            }
+        );
+    });
 });
