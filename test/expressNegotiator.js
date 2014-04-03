@@ -85,6 +85,8 @@ describe('express-negotiator', function () {
     createTest('Accept-Language: no with only nb and en versions available', {url: '/onlyNbAndEnAvailable', headers: {accept: '*/html', 'accept-language': 'no'}}, '/onlyNbAndEnAvailable.nb.html');
     createTest('Accept-Language: nb with only no and en versions available', {url: '/onlyNoAndEnAvailable', headers: {accept: '*/html', 'accept-language': 'nb'}}, '/onlyNoAndEnAvailable.no.html');
 
+    createTest('Accept-Language: nb with only no, nb, and en versions available', {url: '/onlyNoAndNbAndEnAvailable', headers: {accept: '*/html', 'accept-language': 'nb'}}, '/onlyNoAndNbAndEnAvailable.nb.html');
+    createTest('Accept-Language: no with only no, nb, and en versions available', {url: '/onlyNoAndNbAndEnAvailable', headers: {accept: '*/html', 'accept-language': 'no'}}, '/onlyNoAndNbAndEnAvailable.no.html');
 
     describe('with multiple roots', function () {
         createTest(
