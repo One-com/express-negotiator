@@ -80,6 +80,8 @@ describe('express-negotiator', function () {
     createTest('/baz Accept: */html, a non-touch user agent and userAgent:true', {url: '/baz', headers: {accept: '*/html', 'user-agent': 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C)'}}, '/baz.nontouch.html', {userAgent: true});
     createTest('/baz Accept: */html, a touch user agent and userAgent:true', {url: '/baz', headers: {accept: '*/html', 'user-agent': 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; ARM; Trident/6.0; Touch)'}}, '/baz.touch.html', {userAgent: true});
 
+    createTest('a non-locale id and non-mario extension in the request url should be honored, and if a variant has it, it should be preferred', {url: '/index.nocdn', headers: {accept: '*/html'}}, '/index.nocdn.en_US.html');
+
     // no and nb should be considered aliases:
 
     createTest('Accept-Language: no with only nb and en versions available', {url: '/onlyNbAndEnAvailable', headers: {accept: '*/html', 'accept-language': 'no'}}, '/onlyNbAndEnAvailable.nb.html');
