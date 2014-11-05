@@ -90,6 +90,8 @@ describe('express-negotiator', function () {
     createTest('Accept-Language: nb with only no, nb, and en versions available', {url: '/onlyNoAndNbAndEnAvailable', headers: {accept: '*/html', 'accept-language': 'nb'}}, '/onlyNoAndNbAndEnAvailable.nb.html');
     createTest('Accept-Language: no with only no, nb, and en versions available', {url: '/onlyNoAndNbAndEnAvailable', headers: {accept: '*/html', 'accept-language': 'no'}}, '/onlyNoAndNbAndEnAvailable.no.html');
 
+    createTest('should not substitute an html resource with .appcache is in the url', {url: '/blah/index.appcache', headers: {Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'}}, '/blah/index.appcache');
+
     describe('with multiple roots', function () {
         createTest(
             '/ with simple Accept-Language matching a file in root1',
