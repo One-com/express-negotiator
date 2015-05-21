@@ -82,6 +82,8 @@ describe('express-negotiator', function () {
 
     createTest('a non-locale id and non-mario extension in the request url should be honored, and if a variant has it, it should be preferred', {url: '/index.nocdn', headers: {accept: '*/html'}}, '/index.nocdn.en_US.html');
 
+    createTest('do not break if the url contains non-UTF-8 percent encoded bytes', {url: '/%E8.txt'}, '/%E8.txt');
+
     // no and nb should be considered aliases:
 
     createTest('Accept-Language: no with only nb and en versions available', {url: '/onlyNbAndEnAvailable', headers: {accept: '*/html', 'accept-language': 'no'}}, '/onlyNbAndEnAvailable.nb.html');
