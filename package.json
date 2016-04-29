@@ -29,7 +29,7 @@
   "dependencies": {
     "async": "=0.2.8",
     "mario": "=1.4.1",
-    "memoizeasync": "=0.3.0",
+    "memoizeasync": "0.9.0",
     "memoizesync": "=0.2.0",
     "mime": "=1.2.7",
     "passerror": "=0.0.1",
